@@ -1,0 +1,29 @@
+# Write a Python program that finds the longest common substring between two strings.
+
+def logestCommonString(str1, str2):
+    m = len(str1)
+    n = len(str2)
+    result = 0
+    end = 0
+    
+    length = [[0 for j in range(m)] for i in  range(2)]
+    cur_row = 0
+    for i in range(0, m+1):
+        for j in range(0, n+1):
+            if (i == 0 or j==0):
+                length[cur_row][j] = 0
+            elif (str1[i-1] == str2[j-1]):
+                length[cur_row][j] = length[1-cur_row][j-1] + 1
+                
+                if (length[cur_row][j] > result):
+                    result = length[cur_row][j]
+                    end = i - 1
+            else:
+                length[cur_row][j] = 0
+                
+        cur_row = 1 - cur_row
+    if result == 0:
+        return "-1"
+    return str1[end - result +1 : end +1]
+
+print(logestCommonString('banana', 'ban'))
